@@ -1,0 +1,56 @@
+- hosts: localhost
+  name: Macbook Playbook
+  gather_facts: False
+  vars:
+    env: dev
+    TFENV_ARCH: amd64
+  tasks:
+    - name: Ensures tabs are present via homebrew
+      community.general.homebrew_tap:
+        name: "{{ item }}"
+        state: present
+      with_items:
+        - hashicorp/tap
+
+    - name: Ensures packages are present via homebrew cask
+      community.general.homebrew_cask:
+        name: "{{ item }}"
+        state: present
+        install_options: 'appdir=/Applications'
+      with_items:
+        - visual-studio-code
+        - multipass
+        - spotify
+
+    - name: Ensures packages are present via homebrew
+      community.general.homebrew:
+        name: "{{ item }}"
+        path: "/Applications"
+        state: present
+      with_items:
+        - openssl
+        - readline
+        - sqlite3
+        - xz
+        - zlib
+        - jq
+        - yq
+        - wget
+        - go
+        - kubernetes-cli
+        - fzf
+        - sshuttle
+        - hugo
+        - helm
+        - kind
+        - awscli
+        - gnupg
+        - kubectx
+        - helm
+        - stern
+        - terraform
+        - tfenv
+        - pyenv # https://faun.pub/pyenv-multi-version-python-development-on-mac-578736fb91aa
+      ignore_errors: yes
+      tags:
+        - packages
