@@ -5,7 +5,7 @@
     env: dev
     TFENV_ARCH: amd64
   tasks:
-    - name: Ensures tabs are present via homebrew
+    - name: Ensures taps are present via homebrew
       community.general.homebrew_tap:
         name: "{{ item }}"
         state: present
